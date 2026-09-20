@@ -4,6 +4,12 @@ const schedule = require('../data/schedule');
 
 
 module.exports = async function handler(req, res) {
+      const cronSecret = process.env.CRON_SECRET;
+
+  if (!cronSecret || req.headers.authorization !== `Bearer ${cronSecret}`) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Method not allowed' });
     return;
