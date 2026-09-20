@@ -31,12 +31,9 @@ module.exports = async function handler(req, res) {
       hourCycle: 'h23',
     });
 
-   const time = formatter.format(now);
-const requestedTime = req.query && req.query.test;
+ const time = formatter.format(now);
 
-const targetTime = requestedTime || time;
-
-const messages = schedule[targetTime];
+const messages = schedule[time];
 
     if (!messages || messages.length === 0) {
       res.status(200).json({
