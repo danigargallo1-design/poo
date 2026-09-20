@@ -1,6 +1,6 @@
 const webpush = require('web-push');
 const { getSubscriptions, deleteSubscription } = require('../lib/store');
-
+const messages = require('../data/messages');
 /**
  * POST /api/send
  * Envia una notificacion Push real a las suscripciones registradas.
@@ -36,11 +36,18 @@ module.exports = async function handler(req, res) {
   try {
     const body = (typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body) || {};
 
-    const payload = JSON.stringify({
-      title: body.title || 'NO TE DUERMAS',
-      body: body.body || 'Notificacion de prueba enviada desde el servidor.',
-      url: body.url || '/',
-    });
+   let message = body.body;
+
+if (!message && body.category && messages[body.category]) {
+  const list = messages[body.category];
+  message = list[Math.floor(Math.random() * list.length)];
+}
+
+const payload = JSON.stringify({
+  title: body.title || 'NO TE DUERMAS',
+  body: message || 'Deja de perder el tiempo.',
+  url: body.url || '/',
+});
 
     let subs = await getSubscriptions();
     if (body.endpoint) subs = subs.filter((s) => s.endpoint === body.endpoint);
