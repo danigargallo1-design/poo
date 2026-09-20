@@ -60,10 +60,14 @@ module.exports = async function handler(req, res) {
           await webpush.sendNotification(sub, payload, { TTL: 60 });
           sent += 1;
         } catch (err) {
-          if (err.statusCode === 404 || err.statusCode === 410) {
-            await deleteSubscription(sub.endpoint);
-            removed += 1;
-          } else {
+         if (
+  err.statusCode === 404 ||
+  err.statusCode === 410 ||
+  String(err.message || '').includes('p256dh value should be 65 bytes long')
+) {
+  await deleteSubscription(sub.endpoint);
+  removed += 1;
+} else {
             errors.push(err.statusCode ? `${err.statusCode}: ${err.body}` : String(err));
           }
         }
