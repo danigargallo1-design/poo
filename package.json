@@ -1,0 +1,16 @@
+{
+  "name": "no-te-duermas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PWA con Web Push real (VAPID) sobre Vercel Serverless Functions",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "generate-vapid": "web-push generate-vapid-keys"
+  },
+  "dependencies": {
+    "web-push": "^3.6.7"
+  }
+}

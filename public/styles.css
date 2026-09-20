@@ -1,0 +1,97 @@
+:root {
+  --bg: #0b0f1a;
+  --fg: #f4f6fb;
+  --muted: #8d97b0;
+  --accent: #ff4d4d;
+  --border: rgba(244, 246, 251, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: radial-gradient(120% 90% at 50% 0%, #16203a 0%, var(--bg) 60%);
+  color: var(--fg);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 2rem 1.25rem calc(2rem + env(safe-area-inset-bottom));
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 11vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  width: 100%;
+  max-width: 22rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease, background 0.12s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--fg);
+  border-color: var(--border);
+}
+
+.status {
+  margin: 0;
+  min-height: 1.5rem;
+  max-width: 24rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.status.error {
+  color: var(--accent);
+}

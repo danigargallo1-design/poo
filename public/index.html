@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>No te duermas</title>
+    <meta name="description" content="PWA minima con notificaciones push reales." />
+    <meta name="theme-color" content="#0b0f1a" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="No te duermas" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <h1 class="title">NO TE DUERMAS</h1>
+
+      <div class="actions">
+        <button id="enable" class="btn btn-primary" type="button">ACTIVAR NOTIFICACIONES</button>
+        <button id="test" class="btn btn-ghost" type="button" disabled>
+          ENVIAR NOTIFICACIÓN DE PRUEBA
+        </button>
+      </div>
+
+      <p id="status" class="status" role="status" aria-live="polite">Listo.</p>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
