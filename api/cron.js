@@ -1,6 +1,7 @@
 const webpush = require('web-push');
-const { getSubscriptions, deleteSubscription } = require('../lib/store');
+const { getSubscriptions, deleteSubscription, hasRedis } = require('../lib/store');
 const schedule = require('../data/schedule');
+
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -44,6 +45,42 @@ const messages = schedule[time];
       });
       return;
     }
+
+    const today = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Europe/Madrid',
+}).format(now);
+
+const executionKey = `ntd:cron:${today}:${time}`;
+
+if (hasRedis()) {
+  const check = await fetch(process.env.KV_REST_API_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify([
+      'SET',
+      executionKey,
+      '1',
+      'NX',
+      'EX',
+      '120',
+    ]),
+  });
+
+  const result = await check.json();
+
+  if (result.result !== 'OK') {
+    res.status(200).json({
+      ok: true,
+      sent: 0,
+      time,
+      message: 'Esta notificación ya fue procesada.',
+    });
+    return;
+  }
+}
 
     const message = messages[Math.floor(Math.random() * messages.length)];
 
